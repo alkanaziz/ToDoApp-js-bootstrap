@@ -1,3 +1,5 @@
+"use strict";
+
 let result;
 
 let taskList = [
