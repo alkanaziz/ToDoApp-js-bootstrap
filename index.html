@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,12 +20,29 @@
             <div class="card-header">
               <h3 class="card-title h3" id="title">Todo App</h3>
             </div>
+
+            <!-- Input Group to Add New Task -->
+            <div class="card-body">
+              <form>
+                <div class="input-group">
+                  <input type="text" id="inputTask" class="form-control" placeholder="Tippen Sie hier, um neue Aufgabe hinzuzufügen...">
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-primary" id="btnAddNewTask">Hinzufügen</button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
 
           <div class="card mt-3">
             <ul id="task-list" class="list-group list-group-flush">
-              <!-- Here will be added "li"-Elements by JavaScript -->
+              <!-- "li"-Elements will be added here by JavaScript -->
             </ul>
+
+            <!-- Button to delete tasks -->
+            <div class="card-footer">
+              <button type="button" class="btn btn-danger btn-sm float-end" id="btnClear">Alle Löschen</button>
+            </div>
           </div>
         </div>
       </div>
