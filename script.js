@@ -38,10 +38,14 @@ btnAddNewTaskElem.addEventListener("click", addNewTask);
 function addNewTask(event) {
 
     let taskInputElem = document.querySelector("#taskInput");
-    tasksList.push({ id: tasksList.length + 1, taskName: taskInputElem.value, status: "pending" })
-    taskInputElem.value = "";
 
-    displayTasks()
+    if (taskInputElem.value === "") {
+        alert("Bitte geben Sie eine Aufgabe ein...")
+    } else {
+        tasksList.push({ id: tasksList.length + 1, taskName: taskInputElem.value, status: "pending" })
+        taskInputElem.value = "";
+        displayTasks()
+    }
     
     event.preventDefault();
 
