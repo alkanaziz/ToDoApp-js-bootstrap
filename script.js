@@ -2,7 +2,7 @@
 
 let result;
 
-let taskList = [
+let tasksList = [
     {id: 1, taskName: "Task 1", status: "pending"},
     {id: 2, taskName: "Task 2", status: "pending"},
     {id: 3, taskName: "Task 3", status: "pending"},
@@ -10,18 +10,19 @@ let taskList = [
 ]
 let ulElem = document.getElementById("task-list");
 
+// ADD and DISPLAY TASK from tasksList with "insertAdjacentHTML"
+for(let task of tasksList) {
 
-for(let task of taskList) {
-    let liElem = document.createElement("li");
-    liElem.className = "task list-group-item list-group-item-info";
-    liElem.innerHTML = /*html*/`
+    let liElem = /*html*/ `
+    <li class="task list-group-item list-group-item-info">
         <div class="form-check">
-           <input type="checkbox" id="${task.id}" class="form-check-input" />
-           <label for="${task.id}" class="form-check-label">${task.taskName}</label>
+            <input type="checkbox" id="${task.id}" class="form-check-input" />
+            <label for="${task.id}" class="form-check-label">${task.taskName}</label>
         </div>
+    </li>
     `;
-ulElem.insertAdjacentElement("beforeend", liElem);
-console.log(liElem)
+    ulElem.insertAdjacentHTML("beforeend", liElem);
+
 }
-console.log(ulElem)
+
 
