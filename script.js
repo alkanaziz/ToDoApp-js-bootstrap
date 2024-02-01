@@ -13,6 +13,7 @@ displayTasks()
 
 function displayTasks() {
     let ulElem = document.getElementById("task-list");
+    ulElem.innerHTML = "";
 
     // ADD and DISPLAY TASK from tasksList with "insertAdjacentHTML"
     for (let task of tasksList) {
@@ -30,3 +31,18 @@ function displayTasks() {
     }
 };
 
+// ADD NEW TASK BUTTON
+let btnAddNewTaskElem = document.querySelector("#btnAddNewTask");
+btnAddNewTaskElem.addEventListener("click", addNewTask);
+
+function addNewTask(event) {
+
+    let taskInputElem = document.querySelector("#taskInput");
+    tasksList.push({ id: tasksList.length + 1, taskName: taskInputElem.value, status: "pending" })
+    taskInputElem.value = "";
+
+    displayTasks()
+    
+    event.preventDefault();
+
+}
