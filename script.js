@@ -56,7 +56,8 @@ function addNewTask(event) {
 
         if(!isEditTask) {
             // Add New Task
-            tasksList.push({ id: tasksList.length + 1, taskName: taskInputElem.value, status: "pending" })
+            let newId = tasksList.length == 0 ? 1 : tasksList[tasksList.length - 1].id + 1;
+            tasksList.push({ id: newId, taskName: taskInputElem.value, status: "pending" })
         } else {
             // Edit selected Task
             for(let task of tasksList) {
