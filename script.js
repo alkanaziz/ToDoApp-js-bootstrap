@@ -9,6 +9,11 @@ let tasksList = [
     { id: 4, taskName: "Task 4", status: "pending" },
 ]
 
+let editId;
+let isEditTask = false;
+
+let taskInputElem = document.querySelector("#taskInput");
+
 displayTasks()
 
 function displayTasks() {
@@ -27,7 +32,7 @@ function displayTasks() {
         <div class="dropdown">
             <button class="btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis"></i></button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-pen"></i> Bearbeiten</a></li>
+                <li><a onclick="editTask(${task.id}, '${task.taskName}')" class="dropdown-item" href="#"><i class="fa-solid fa-pen"></i> Bearbeiten</a></li>
                 <li><a onclick="deleteTask(${task.id})" class="dropdown-item" href="#"><i class="fa-solid fa-trash"></i> Löschen</a></li>
             </ul>
         </div>
@@ -38,18 +43,29 @@ function displayTasks() {
     }
 };
 
-// ADD NEW TASK BUTTON
+// ADD NEW TASK and EDIT TASK FUNCTION
 let btnAddNewTaskElem = document.querySelector("#btnAddNewTask");
 btnAddNewTaskElem.addEventListener("click", addNewTask);
 
 function addNewTask(event) {
 
-    let taskInputElem = document.querySelector("#taskInput");
 
     if (taskInputElem.value === "") {
         alert("Bitte geben Sie eine Aufgabe ein...")
     } else {
-        tasksList.push({ id: tasksList.length + 1, taskName: taskInputElem.value, status: "pending" })
+
+        if(!isEditTask) {
+            // Add New Task
+            tasksList.push({ id: tasksList.length + 1, taskName: taskInputElem.value, status: "pending" })
+        } else {
+            // Edit selected Task
+            for(let task of tasksList) {
+                if(task.id == editId) {
+                    task.taskName = taskInputElem.value;
+                }
+                isEditTask = false;
+            }
+        }
         taskInputElem.value = "";
         displayTasks()
     }
@@ -77,4 +93,13 @@ function deleteTask(id) {
     tasksList.splice(deletedId, 1);
     displayTasks();
 };
+
+// EDIT TASK FUNKTION
+function editTask(taskId, taskName) {
+    isEditTask = true;
+    editId = taskId;
+    taskInputElem.value = taskName;
+    taskInputElem.focus();
+    taskInputElem.classList.add("active");
+}
 
