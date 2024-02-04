@@ -28,7 +28,7 @@ function displayTasks() {
             <button class="btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis"></i></button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#"><i class="fa-solid fa-pen"></i> Bearbeiten</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-trash"></i> Löschen</a></li>
+                <li><a onclick="deleteTask(${task.id})" class="dropdown-item" href="#"><i class="fa-solid fa-trash"></i> Löschen</a></li>
             </ul>
         </div>
     </li>
@@ -56,4 +56,25 @@ function addNewTask(event) {
     
     event.preventDefault();
 
-}
+};
+
+// DELETE TASK
+function deleteTask(id) {
+    // console.log(id);
+    let deletedId;
+
+    // Erste Lösung mit for loop
+    // for(let i in tasksList) {
+    //     if(tasksList[i].id == id) {
+    //         deletedId = i;
+    //     }
+    // };
+
+    // Zweite Lösung mit findIndex 
+    deletedId = tasksList.findIndex(task => task.id == id );
+    // console.log(deletedId)
+
+    tasksList.splice(deletedId, 1);
+    displayTasks();
+};
+
