@@ -12,7 +12,9 @@ let tasksList = [
 let editId;
 let isEditTask = false;
 
-let taskInputElem = document.querySelector("#taskInput");
+const taskInputElem = document.querySelector("#taskInput");
+
+const deleteAllBtnElem = document.getElementById("deleteAllBtn");
 
 displayTasks()
 
@@ -20,10 +22,15 @@ function displayTasks() {
     let ulElem = document.getElementById("task-list");
     ulElem.innerHTML = "";
 
-    // ADD and DISPLAY TASK from tasksList with "insertAdjacentHTML"
-    for (let task of tasksList) {
+    if (tasksList.length == 0) {
+        ulElem.innerHTML = /*html*/`
+        <p class="p-3 m-0">Du hast keine Aufgabe...</p>
+        `;
+    } else {
+        // ADD and DISPLAY TASK from tasksList with "insertAdjacentHTML"
+        for (let task of tasksList) {
 
-        let liElem = /*html*/ `
+            let liElem = /*html*/ `
     <li class="task list-group-item list-group-item-info d-flex justify-content-between align-items-center">
         <div class="form-check">
             <input type="checkbox" id="${task.id}" class="form-check-input" />
@@ -38,9 +45,11 @@ function displayTasks() {
         </div>
     </li>
     `;
-        ulElem.insertAdjacentHTML("beforeend", liElem);
+            ulElem.insertAdjacentHTML("beforeend", liElem);
 
+        }
     }
+
 };
 
 // ADD NEW TASK and EDIT TASK FUNCTION
@@ -54,14 +63,14 @@ function addNewTask(event) {
         alert("Bitte geben Sie eine Aufgabe ein...")
     } else {
 
-        if(!isEditTask) {
+        if (!isEditTask) {
             // Add New Task
             let newId = tasksList.length == 0 ? 1 : tasksList[tasksList.length - 1].id + 1;
             tasksList.push({ id: newId, taskName: taskInputElem.value, status: "pending" })
         } else {
             // Edit selected Task
-            for(let task of tasksList) {
-                if(task.id == editId) {
+            for (let task of tasksList) {
+                if (task.id == editId) {
                     task.taskName = taskInputElem.value;
                 }
                 isEditTask = false;
@@ -70,7 +79,7 @@ function addNewTask(event) {
         taskInputElem.value = "";
         displayTasks()
     }
-    
+
     event.preventDefault();
 
 };
@@ -88,7 +97,7 @@ function deleteTask(id) {
     // };
 
     // Zweite Lösung mit findIndex 
-    deletedId = tasksList.findIndex(task => task.id == id );
+    deletedId = tasksList.findIndex(task => task.id == id);
     // console.log(deletedId)
 
     tasksList.splice(deletedId, 1);
@@ -102,5 +111,12 @@ function editTask(taskId, taskName) {
     taskInputElem.value = taskName;
     taskInputElem.focus();
     taskInputElem.classList.add("active");
-}
+};
 
+
+// DELETE ALLS TASK FUNCTION MIT addEventListener()
+
+deleteAllBtnElem.addEventListener("click", function () {
+    tasksList.splice(0, tasksList.length);
+    displayTasks();
+});
