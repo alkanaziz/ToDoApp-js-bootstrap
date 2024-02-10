@@ -20,34 +20,30 @@ displayTasks()
 
 function displayTasks() {
     let ulElem = document.getElementById("task-list");
-    ulElem.innerHTML = "";
 
     if (tasksList.length == 0) {
         ulElem.innerHTML = /*html*/`
-        <p class="p-3 m-0">Du hast keine Aufgabe...</p>
+            <p class="p-3 m-0">Du hast keine Aufgabe...</p>
         `;
     } else {
         // ADD and DISPLAY TASK from tasksList with "insertAdjacentHTML"
-        for (let task of tasksList) {
-
-            let liElem = /*html*/ `
-    <li class="task list-group-item list-group-item-info d-flex justify-content-between align-items-center">
-        <div class="form-check">
-            <input type="checkbox" id="${task.id}" class="form-check-input" />
-            <label for="${task.id}" class="form-check-label">${task.taskName}</label>
-        </div>
-        <div class="dropdown">
-            <button class="btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis"></i></button>
-            <ul class="dropdown-menu">
-                <li><a onclick="editTask(${task.id}, '${task.taskName}')" class="dropdown-item" href="#"><i class="fa-solid fa-pen"></i> Bearbeiten</a></li>
-                <li><a onclick="deleteTask(${task.id})" class="dropdown-item" href="#"><i class="fa-solid fa-trash"></i> Löschen</a></li>
-            </ul>
-        </div>
-    </li>
-    `;
-            ulElem.insertAdjacentHTML("beforeend", liElem);
-
-        }
+        ulElem.innerHTML = tasksList.map((task) => {
+            return /*html*/`
+                <li class="task list-group-item list-group-item-info d-flex justify-content-between align-items-center">
+                    <div class="form-check">
+                        <input type="checkbox" id="${task.id}" class="form-check-input" />
+                        <label for="${task.id}" class="form-check-label">${task.taskName}</label>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis"></i></button>
+                        <ul class="dropdown-menu">
+                            <li><a onclick="editTask(${task.id}, '${task.taskName}')" class="dropdown-item" href="#"><i class="fa-solid fa-pen"></i> Bearbeiten</a></li>
+                            <li><a onclick="deleteTask(${task.id})" class="dropdown-item" href="#"><i class="fa-solid fa-trash"></i> Löschen</a></li>
+                        </ul>
+                    </div>
+                </li>
+                `;
+        }).join("");
     }
 
 };
