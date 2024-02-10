@@ -26,7 +26,7 @@ function displayTasks() {
             <p class="p-3 m-0">Du hast keine Aufgabe...</p>
         `;
     } else {
-        // ADD and DISPLAY TASK from tasksList with "insertAdjacentHTML"
+        // DISPLAY TASK from tasksList with "map() Method"
         ulElem.innerHTML = tasksList.map((task) => {
             return /*html*/`
                 <li class="task list-group-item list-group-item-info d-flex justify-content-between align-items-center">
