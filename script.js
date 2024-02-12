@@ -4,9 +4,9 @@ let result;
 
 let tasksList = [
     { id: 1, taskName: "Task 1", status: "pending" },
-    { id: 2, taskName: "Task 2", status: "pending" },
+    { id: 2, taskName: "Task 2", status: "completed" },
     { id: 3, taskName: "Task 3", status: "pending" },
-    { id: 4, taskName: "Task 4", status: "pending" },
+    { id: 4, taskName: "Task 4", status: "completed" },
 ]
 
 let editId;
@@ -20,19 +20,20 @@ displayTasks()
 
 function displayTasks() {
     let ulElem = document.getElementById("task-list");
-
+    
     if (tasksList.length == 0) {
         ulElem.innerHTML = /*html*/`
             <p class="p-3 m-0">Du hast keine Aufgabe...</p>
-        `;
+            `;
     } else {
         // DISPLAY TASK from tasksList with "map() Method"
         ulElem.innerHTML = tasksList.map((task) => {
+            let isCompleted = task.status == "completed" ? "checked" : "";
             return /*html*/`
                 <li class="task list-group-item list-group-item-info d-flex justify-content-between align-items-center">
                     <div class="form-check">
-                        <input type="checkbox" id="${task.id}" class="form-check-input" />
-                        <label for="${task.id}" class="form-check-label">${task.taskName}</label>
+                        <input onclick="updateStatus(this)" type="checkbox" id="${task.id}" class="form-check-input" ${isCompleted} />
+                        <label for="${task.id}" class="form-check-label ${isCompleted}">${task.taskName}</label>
                     </div>
                     <div class="dropdown">
                         <button class="btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis"></i></button>
@@ -116,3 +117,32 @@ deleteAllBtnElem.addEventListener("click", function () {
     tasksList.splice(0, tasksList.length);
     displayTasks();
 });
+
+// UPDATE STATUS und STYLE OF TASKS with toggle() und findIndex() methods
+function updateStatus(selectedTask) {
+    // console.log(selectedTask.checked) 
+    let labelElem = selectedTask.nextElementSibling;
+    let newStatus = selectedTask.checked ? "completed" : "pending";
+
+    labelElem.classList.toggle("checked", selectedTask.checked)
+
+    let selectedTaskIndex = tasksList.findIndex(task => task.id == selectedTask.id);
+    tasksList[selectedTaskIndex].status = newStatus;
+   
+    // console.log(tasksList[selectedTaskIndex])
+
+    // if(selectedTask.checked) {
+    //     labelElem.classList.add("checked");
+    //     status = "completed";
+    // } else {
+    //     labelElem.classList.remove("checked");
+    //     status = "pending";
+    // };
+
+    // for(let task of tasksList) {
+    //     if(task.id == selectedTask.id) {
+    //         task.status = status;
+    //     }
+    // }
+
+};
