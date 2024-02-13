@@ -1,20 +1,17 @@
 "use strict";
 
-let result;
+const tasksList = localStorage.getItem("tasksList") ? JSON.parse(localStorage.getItem("tasksList")) : [];
 
-let tasksList = localStorage.getItem("tasksList") ? JSON.parse(localStorage.getItem("tasksList")) : [];
-
+// SAVE "tasksList" Array to LocalStorage
 function saveToLocalStorage() {
     localStorage.setItem("tasksList", JSON.stringify(tasksList));
 }
 
 let editId;
 let isEditTask = false;
-
 const taskInputElem = document.querySelector("#taskInput");
-
+const btnAddNewTaskElem = document.querySelector("#btnAddNewTask");
 const deleteAllBtnElem = document.getElementById("deleteAllBtn");
-
 const filtersSpanElem = document.querySelectorAll(".filters span");
 
 displayTasks("all")
@@ -51,7 +48,6 @@ function displayTasks(filter) {
 };
 
 // ADD NEW TASK and EDIT TASK FUNCTION
-let btnAddNewTaskElem = document.querySelector("#btnAddNewTask");
 btnAddNewTaskElem.addEventListener("click", addNewTask);
 
 function addNewTask(event) {
@@ -101,9 +97,7 @@ function editTask(taskId, taskName) {
     taskInputElem.classList.add("active");
 };
 
-
 // DELETE ALLS TASK FUNCTION MIT addEventListener()
-
 deleteAllBtnElem.addEventListener("click", function () {
     tasksList.splice(0, tasksList.length);
     displayTasks();
