@@ -16,9 +16,11 @@ const taskInputElem = document.querySelector("#taskInput");
 
 const deleteAllBtnElem = document.getElementById("deleteAllBtn");
 
-displayTasks()
+const filtersSpanElem = document.querySelectorAll(".filters span");
 
-function displayTasks() {
+displayTasks("all")
+
+function displayTasks(filter) {
     let ulElem = document.getElementById("task-list");
     
     if (tasksList.length == 0) {
@@ -27,7 +29,7 @@ function displayTasks() {
             `;
     } else {
         // DISPLAY TASK from tasksList with "map() Method"
-        ulElem.innerHTML = tasksList.map((task) => {
+        ulElem.innerHTML = tasksList.filter((task) => task.status == filter || filter == "all").map((task) => {
             let isCompleted = task.status == "completed" ? "checked" : "";
             return /*html*/`
                 <li class="task list-group-item list-group-item-info d-flex justify-content-between align-items-center">
@@ -74,7 +76,7 @@ function addNewTask(event) {
             }
         }
         taskInputElem.value = "";
-        displayTasks()
+        displayTasks(document.querySelector(".filters span.active").id)
     }
 
     event.preventDefault();
@@ -98,7 +100,7 @@ function deleteTask(id) {
     // console.log(deletedId)
 
     tasksList.splice(deletedId, 1);
-    displayTasks();
+    displayTasks(document.querySelector(".filters span.active").id);
 };
 
 // EDIT TASK FUNKTION
@@ -129,6 +131,7 @@ function updateStatus(selectedTask) {
     let selectedTaskIndex = tasksList.findIndex(task => task.id == selectedTask.id);
     tasksList[selectedTaskIndex].status = newStatus;
    
+    displayTasks(document.querySelector(".filters span.active").id)
     // console.log(tasksList[selectedTaskIndex])
 
     // if(selectedTask.checked) {
@@ -145,4 +148,14 @@ function updateStatus(selectedTask) {
     //     }
     // }
 
+};
+
+// FILTERS
+for(let span of filtersSpanElem) {
+    span.addEventListener("click", () => {
+        document.querySelector("span.active").classList.remove("active");
+        span.classList.add("active");
+        displayTasks(span.id);
+        // console.log(span.id)
+    })
 };

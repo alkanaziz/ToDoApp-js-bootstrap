@@ -1,3 +1,14 @@
 .task label.checked {
     text-decoration: line-through;
 }
+
+.filters span {
+    cursor: pointer;
+    margin-right: 5px;
+    font-size: 1rem;
+
+}
+
+.filters span.active {
+    color: #3c87ff;
+}
