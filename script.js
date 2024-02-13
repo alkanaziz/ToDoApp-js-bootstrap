@@ -28,7 +28,7 @@ function displayTasks(filter) {
             <p class="p-3 m-0">Du hast keine Aufgabe...</p>
             `;
     } else {
-        // DISPLAY TASK from tasksList with "map() Method"
+        // DISPLAY TASK from tasksList with "filter()" and "map()" Methods
         ulElem.innerHTML = tasksList.filter((task) => task.status == filter || filter == "all").map((task) => {
             let isCompleted = task.status == "completed" ? "checked" : "";
             return /*html*/`
@@ -57,7 +57,6 @@ btnAddNewTaskElem.addEventListener("click", addNewTask);
 
 function addNewTask(event) {
 
-
     if (taskInputElem.value === "") {
         alert("Bitte geben Sie eine Aufgabe ein...")
     } else {
@@ -85,19 +84,9 @@ function addNewTask(event) {
 
 // DELETE TASK
 function deleteTask(id) {
-    // console.log(id);
     let deletedId;
 
-    // Erste Lösung mit for loop
-    // for(let i in tasksList) {
-    //     if(tasksList[i].id == id) {
-    //         deletedId = i;
-    //     }
-    // };
-
-    // Zweite Lösung mit findIndex 
     deletedId = tasksList.findIndex(task => task.id == id);
-    // console.log(deletedId)
 
     tasksList.splice(deletedId, 1);
     displayTasks(document.querySelector(".filters span.active").id);
@@ -122,7 +111,6 @@ deleteAllBtnElem.addEventListener("click", function () {
 
 // UPDATE STATUS und STYLE OF TASKS with toggle() und findIndex() methods
 function updateStatus(selectedTask) {
-    // console.log(selectedTask.checked) 
     let labelElem = selectedTask.nextElementSibling;
     let newStatus = selectedTask.checked ? "completed" : "pending";
 
@@ -132,22 +120,6 @@ function updateStatus(selectedTask) {
     tasksList[selectedTaskIndex].status = newStatus;
    
     displayTasks(document.querySelector(".filters span.active").id)
-    // console.log(tasksList[selectedTaskIndex])
-
-    // if(selectedTask.checked) {
-    //     labelElem.classList.add("checked");
-    //     status = "completed";
-    // } else {
-    //     labelElem.classList.remove("checked");
-    //     status = "pending";
-    // };
-
-    // for(let task of tasksList) {
-    //     if(task.id == selectedTask.id) {
-    //         task.status = status;
-    //     }
-    // }
-
 };
 
 // FILTERS
@@ -156,6 +128,5 @@ for(let span of filtersSpanElem) {
         document.querySelector("span.active").classList.remove("active");
         span.classList.add("active");
         displayTasks(span.id);
-        // console.log(span.id)
     })
 };
