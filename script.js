@@ -2,12 +2,11 @@
 
 let result;
 
-let tasksList = [
-    { id: 1, taskName: "Task 1", status: "pending" },
-    { id: 2, taskName: "Task 2", status: "completed" },
-    { id: 3, taskName: "Task 3", status: "pending" },
-    { id: 4, taskName: "Task 4", status: "completed" },
-]
+let tasksList = localStorage.getItem("tasksList") ? JSON.parse(localStorage.getItem("tasksList")) : [];
+
+function saveToLocalStorage() {
+    localStorage.setItem("tasksList", JSON.stringify(tasksList));
+}
 
 let editId;
 let isEditTask = false;
@@ -79,7 +78,7 @@ function addNewTask(event) {
     }
 
     event.preventDefault();
-
+    saveToLocalStorage();
 };
 
 // DELETE TASK
@@ -90,6 +89,7 @@ function deleteTask(id) {
 
     tasksList.splice(deletedId, 1);
     displayTasks(document.querySelector(".filters span.active").id);
+    saveToLocalStorage();
 };
 
 // EDIT TASK FUNKTION
@@ -107,6 +107,7 @@ function editTask(taskId, taskName) {
 deleteAllBtnElem.addEventListener("click", function () {
     tasksList.splice(0, tasksList.length);
     displayTasks();
+    saveToLocalStorage();
 });
 
 // UPDATE STATUS und STYLE OF TASKS with toggle() und findIndex() methods
@@ -120,6 +121,7 @@ function updateStatus(selectedTask) {
     tasksList[selectedTaskIndex].status = newStatus;
    
     displayTasks(document.querySelector(".filters span.active").id)
+    saveToLocalStorage();
 };
 
 // FILTERS
